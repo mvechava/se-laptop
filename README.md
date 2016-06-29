@@ -41,11 +41,12 @@
 	4.5. Enable IPv4 forwarding using yast2 lan
 
 	4.6. `vi /etc/sysconfig/SuSEfirewall2` and change FW_ROUTE="yes"
+	
 5. Install SMT on laptop
 
 	5.1. `zypper in -t pattern smt`
 
-	5.2. yast2 -> SMT Configuration Wizard
+	5.2. YaST -> SMT Configuration Wizard
 
 	5.3. `smt-repos -e <SLES12-SP1-Pool, SLES12-SP1-Updates, ... etc.>`
 
@@ -113,7 +114,7 @@
 
 	6.9. Create fixvmnet script
 
-		6.9.1. `sudo vi /usr/local/bin/fixvmnet`
+		6.9.1. sudo vi /usr/local/bin/fixvmnet
 
 			#!/bin/bash
 			chmod 777 /dev/vmnet*
@@ -121,7 +122,7 @@
 			ifup vmnet2.200
 			ifup vmnet2.300
 
-		6.9.2. `sudo chmod +x /usr/local/bin/fixvmnet`
+		6.9.2. sudo chmod +x /usr/local/bin/fixvmnet
 
 	6.10. `sudo fixvmnet`
 
@@ -270,7 +271,7 @@
 
 		9.7.2. Change network mode to teaming
 
-		9.7.3. Add bastion network with following settings:
+		9.7.3. Add bastion network with following settings
 
 			-IP Address - 172.16.31.10
 			-Router - 172.16.31.2
@@ -285,21 +286,21 @@
 
 		9.8.1. Select SLE-12-SP1-Server-DVD-x86_64-GM-DVD1.iso as CD/DVD device in VMware
 
-		9.8.2. `mount /dev/sr0 /mnt`
+		9.8.2. mount /dev/sr0 /mnt
 
-		9.8.3. `rsync -avP /mnt/ /srv/tftpboot/suse-12.1/install/`
-
-		9.8.4. `umount /mnt`
-
-		9.8.5. `eject /dev/sr0`
+		9.8.3. rsync -avP /mnt/ /srv/tftpboot/suse-12.1/install/
+		
+		9.8.4. umount /mnt
+		
+		9.8.5. eject /dev/sr0
 
 		9.8.6. Select SUSE-OPENSTACK-CLOUD-6-x86_64-GM-DVD1.iso as CD/DVD device in VMware
 
-		9.8.7. `mount /dev/sr0 /mnt`
+		9.8.7. mount /dev/sr0 /mnt
 
-		9.8.8. `mkdir /srv/tftpboot/suse-12.1/x86_64/repos/Cloud`
+		9.8.8. mkdir /srv/tftpboot/suse-12.1/x86_64/repos/Cloud
 
-		9.8.9. `rsync -avP /mnt/ /srv/tftpboot/suse-12.1/x86_64/repos/Cloud`
+		9.8.9. rsync -avP /mnt/ /srv/tftpboot/suse-12.1/x86_64/repos/Cloud
 
 	9.9. `screen install-suse-cloud`
 
@@ -315,6 +316,7 @@
 	9.13. Edit DNS barclamp and add 192.168.124.1 to "Forwarders" and apply
 
 	9.14. Create iSCSI targets
+
 		9.14.1. Create xfs partition that takes up whole disk on /dev/disk/by-path/pci-0000:00:10.0-scsi-0:0:1:0 and /dev/disk/by-path/pci-0000:00:10.0-scsi-0:0:2:0
 		9.14.2.	zypper in yast2-iscsi-lio-server
 		9.14.3. yast2 iscsi-lio-server
@@ -383,6 +385,7 @@
 	11.3. PXE boot storage nodes
 
 	11.4. Edit storage nodes:
+
 		Alias - Storage-1, Storage-2, Storage-3, Storage-4
 		Public Name - storage-1.cloud.demo.com, storage-2.cloud.demo.com, storage-3.cloud.demo.com, storage-4.cloud.demo.com
 		Group - Storage
@@ -403,6 +406,7 @@
 	12.2. PXE boot compute VMs
 
 	12.3. Edit compute nodes:
+
 		Alias - Compute-1, Compute-2
 		Public Name - compute-1.cloud.demo.com, compute-2.cloud.demo.com
 		Group - Compute
@@ -411,8 +415,11 @@
 	12.4. Allocate compute nodes
 
 	12.5. Attach iSCSI LUNs
+	
 		12.5.1. Add iSCSI initiator names to Admin server iSCSI client configuration (`cat /etc/iscsi/initiatorname.iscsi`)
+
 		12.5.2. `yast2 iscsi-client` (on both compute nodes)
+
 		12.5.3. Connect to iSCSI LUNs at 192.168.124.10 (on both compute nodes)
 
 	12.6. Enable SBD
