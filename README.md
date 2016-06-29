@@ -20,8 +20,6 @@
 
 		/dev/sdb6 - xfs	  /home for SLES 12 SP1 (Rest / 2)
 
-
-
 		1TB SATA III SSD
 
 		/dev/sda1 - xfs	  /data for both OSes
@@ -32,31 +30,30 @@
 
 4. Install docker
 
-	4.1. zypper in docker docker-compose sle2docker zypper-docker sles11sp3-docker-image sles12-docker-image 
-	sles12sp1-docker-image
+	4.1. `zypper in docker docker-compose sle2docker zypper-docker sles11sp3-docker-image sles11sp4-docker-image sles12-docker-image sles12sp1-docker-image`
 
-	4.2. sudo systemctl enable docker.service
+	4.2. `sudo systemctl enable docker.service`
 
-	4.3. sudo systemctl start docker.service
+	4.3. `sudo systemctl start docker.service`
 
-	4.4. sudo usermod -aG docker mechavarria
+	4.4. `sudo usermod -aG docker mechavarria`
 
 	4.5. Enable IPv4 forwarding using yast2 lan
 
-	4.6. vi /etc/sysconfig/SuSEfirewall2 and change FW_ROUTE="yes"
+	4.6. `vi /etc/sysconfig/SuSEfirewall2` and change FW_ROUTE="yes"
 5. Install SMT on laptop
 
-	5.1. zypper in -t pattern smt
+	5.1. `zypper in -t pattern smt`
 
 	5.2. yast2 -> SMT Configuration Wizard
 
-	5.3. smt-repos -e <SLES12-SP1-Pool, SLES12-SP1-Updates, ... etc.>
+	5.3. `smt-repos -e <SLES12-SP1-Pool, SLES12-SP1-Updates, ... etc.>`
 
-	5.4. smt-mirror (several times as the first one doesn't always get everything properly)
+	5.4. `smt-mirror` (several times as the first one doesn't always get everything properly)
 
-	5.5. systemctl start smt
+	5.5. `systemctl start smt`
 
-	5.6. systemctl enable smt
+	5.6. `systemctl enable smt`
 
 6. Create VMware networks
 
@@ -116,7 +113,7 @@
 
 	6.9. Create fixvmnet script
 
-		6.9.1. sudo vi /usr/sbin/fixvmnet
+		6.9.1. `sudo vi /usr/local/bin/fixvmnet`
 
 			#!/bin/bash
 			chmod 777 /dev/vmnet*
@@ -124,15 +121,15 @@
 			ifup vmnet2.200
 			ifup vmnet2.300
 
-		6.9.2. sudo chmod +x /usr/sbin/fixvmnet
+		6.9.2. `sudo chmod +x /usr/local/bin/fixvmnet`
 
-	6.10. sudo fixvmnet
+	6.10. `sudo fixvmnet`
 
 7. Configure named on laptop
 
-	7.1. sudo zypper in bind
+	7.1. `sudo zypper in bind`
 
-	7.2. sudo vi /etc/named.conf
+	7.2. `sudo vi /etc/named.conf`
 
 		7.2.1. Lines to add/modify:
 
@@ -148,7 +145,7 @@
 				file "192.168.124.zone";
 			};
 
-	7.3. sudo vi /var/lib/named/192.168.124.zone
+	7.3. `sudo vi /var/lib/named/192.168.124.zone`
 
 		7.3.1.
 			;
@@ -168,9 +165,9 @@
 			1		PTR	thinkpad-w540.demo.com.
 			2		PTR	gateway.demo.com.
 			3		PTR	manager.demo.com.
-			10		PTR	admin.demo.com.
+			10		PTR	admin.cloud.demo.com.
 
-	7.4. sudo vi /var/lib/named/demo.zone
+	7.4. `sudo vi /var/lib/named/demo.zone`
 
 		7.4.1.
 			;
@@ -191,15 +188,16 @@
 			thinkpad-w540   A       192.168.124.1
 			gateway		A	192.168.124.2
 			manager         A       192.168.124.3
-			admin           A       192.168.124.10
+			admin.cloud     A       192.168.124.10
 
-	7.5. sudo systemctl start named
+	7.5. `sudo systemctl start named`
 
-	7.6. sudo systemctl enable named
+	7.6. `sudo systemctl enable named`
 
 8. Create SUSE Manager 3 VM
 
 	8.1. Create VM with folllowing settings:
+
 		-4GB RAM
 		-1x dual core processor
 		-200GB VHD
@@ -210,6 +208,7 @@
 	8.2. Boot/Install SLES 12 SP1
 
 	8.3. Configure network:
+	
 		-eth0 - DHCP 172.16.31.0/24
 		-eth1 - 192.168.124.3
 		-Hostname - manager.demo.com
@@ -218,11 +217,11 @@
 
 	8.4. Configure NTP for us.pool.ntp.org to start at boot (hardware clock not running UTC)
 
-	8.5. /usr/lib/suseRegister/bin/clientSetup4SMT.sh https://thinkpad-w540.demo.com/center/regsvc
+	8.5. `/usr/lib/suseRegister/bin/clientSetup4SMT.sh https://thinkpad-w540.demo.com/center/regsvc`
 
-	8.6. zypper up
+	8.6. `zypper up`
 
-	8.7. yast2 susemanager_setup
+	8.7. `yast2 susemanager_setup`
 
 	8.8. Mirror channels (TIME CONSUMING)
 
@@ -235,6 +234,7 @@
 9. Create SUSE OpenStack Cloud 6 Admin VM
 
 	9.1. Create VM with following settings:
+
 		-4GB RAM
 		-1x dual core processor
 		-100GB VHD (OS)
@@ -249,6 +249,7 @@
 	9.2. Boot/Install SLES 12 SP1 w/ SUSE Cloud 6 add-on
 
 	9.3. Configure network:
+
 		-eth0 - bond slave
 		-eth1 - bond slave
 		-eth2 - DHCP 172.16.31.0/24
@@ -259,17 +260,18 @@
 
 	9.4. Configure NTP for us.pool.ntp.org to start at boot (hardware clock not running UTC)
 
-	9.5. /usr/lib/suseRegister/bin/clientSetup4SMT.sh https://thinkpad-w540.demo.com/center/regsvc
+	9.5. `/usr/lib/suseRegister/bin/clientSetup4SMT.sh https://thinkpad-w540.demo.com/center/regsvc`
 
-	9.6. zypper up
+	9.6. `zypper up`
 
-	9.7. yast2 crowbar
+	9.7. `yast2 crowbar`
 
 		9.7.1. Change admin network router to 192.168.124.2
 
 		9.7.2. Change network mode to teaming
 
 		9.7.3. Add bastion network with following settings:
+
 			-IP Address - 172.16.31.10
 			-Router - 172.16.31.2
 			-Subnet - 172.16.31.0
@@ -283,23 +285,23 @@
 
 		9.8.1. Select SLE-12-SP1-Server-DVD-x86_64-GM-DVD1.iso as CD/DVD device in VMware
 
-		9.8.2. mount /dev/sr0 /mnt
+		9.8.2. `mount /dev/sr0 /mnt`
 
-		9.8.3. rsync -avP /mnt/ /srv/tftpboot/suse-12.1/install/
+		9.8.3. `rsync -avP /mnt/ /srv/tftpboot/suse-12.1/install/`
 
-		9.8.4. umount /mnt
+		9.8.4. `umount /mnt`
 
-		9.8.5. eject /dev/sr0
+		9.8.5. `eject /dev/sr0`
 
 		9.8.6. Select SUSE-OPENSTACK-CLOUD-6-x86_64-GM-DVD1.iso as CD/DVD device in VMware
 
-		9.8.7. mount /dev/sr0 /mnt
+		9.8.7. `mount /dev/sr0 /mnt`
 
-		9.8.8. mkdir /srv/tftpboot/suse-12.1/x86_64/repos/Cloud
+		9.8.8. `mkdir /srv/tftpboot/suse-12.1/x86_64/repos/Cloud`
 
-		9.8.9. rsync -avP /mnt/ /srv/tftpboot/suse-12.1/x86_64/repos/Cloud
+		9.8.9. `rsync -avP /mnt/ /srv/tftpboot/suse-12.1/x86_64/repos/Cloud`
 
-	9.9. screen install-suse-cloud
+	9.9. `screen install-suse-cloud`
 
 	9.10. Navigate to http://admin.cloud.demo.com
 
@@ -326,6 +328,7 @@
 10. Create SUSE OpenStack Cloud 6 Controller VMs
 
 	10.1. Create VMs
+
 		-2GB RAM
 		-1x dual core processor
 		-20GB VHD
@@ -335,6 +338,7 @@
 	10.2. PXE boot controller nodes
 
 	10.3. Edit controller nodes:
+
 		Alias - Controller-1, Controller-2
 		Public Name - controller-1.cloud.demo.com, controller-2.cloud.demo.com
 		Group - Controller
@@ -344,22 +348,23 @@
 
 	10.5. Attach iSCSI LUNs
 
-		10.5.1. Add iSCSI initiator names to Admin server iSCSI client configuration (cat 
-		/etc/iscsi/initiatorname.iscsi)
+		10.5.1. Add iSCSI initiator names to Admin server iSCSI client configuration (`cat 
+		/etc/iscsi/initiatorname.iscsi`)
 		
-		10.5.2. yast2 iscsi-client (on both controllers)
+		10.5.2. `yast2 iscsi-client` (on both controllers)
 		
 		10.5.3. Connect to iSCSI LUNs at 192.168.124.10 (on both controllers)
 
 	10.6. Enable SBD
 
-		10.6.1. zypper in sbd (on all controllers)
+		10.6.1. `zypper in sbd` (on all controllers)
 
-		10.6.2. sbd -d /dev/disk/by-path/ip-192.168.124.10\:3260-iscsi-iqn.2016-06.demo.cloud\:ec6910f2-e32d-4ebc-9e91-5f975e5ef140-lun-2 create (on all controllers)
+		10.6.2. `sbd -d /dev/disk/by-path/ip-192.168.124.10\:3260-iscsi-iqn.2016-06.demo.cloud\:ec6910f2-e32d-4ebc-9e91-5f975e5ef140-lun-2 create` (on all controllers)
 
 11. Create SUSE OpenStack Cloud 6 Storage VMs
 
 	11.1. Create Admin VM:
+
 		-1.5GB RAM
 		-1x single core processor
 		-20GB VHD
@@ -367,6 +372,7 @@
 		-eth1 - vmnet2
 
 	11.2. Create OSD VMs:
+
 		-2GB RAM
 		-1x dual core processor
 		-20GB VHD
@@ -387,6 +393,7 @@
 12. Create SUSE OpenStack Cloud 6 Compute VMs
 
 	12.1. Create Compute VMs:
+
 		-4GB RAM
 		-2x dual core processors
 		-20GB VHD
@@ -404,15 +411,15 @@
 	12.4. Allocate compute nodes
 
 	12.5. Attach iSCSI LUNs
-		12.5.1. Add iSCSI initiator names to Admin server iSCSI client configuration (cat /etc/iscsi/initiatorname.iscsi)
-		12.5.2. yast2 iscsi-client (on both compute nodes)
+		12.5.1. Add iSCSI initiator names to Admin server iSCSI client configuration (`cat /etc/iscsi/initiatorname.iscsi`)
+		12.5.2. `yast2 iscsi-client` (on both compute nodes)
 		12.5.3. Connect to iSCSI LUNs at 192.168.124.10 (on both compute nodes)
 
 	12.6. Enable SBD
 
-		12.6.1. zypper in sbd (on all compute nodes)
+		12.6.1. `zypper in sbd` (on all compute nodes)
 
-		12.6.2. sbd -d /dev/disk/by-path/ip-192.168.124.10\:3260-iscsi-iqn.2016-06.demo.cloud\:ec6910f2-e32d-4ebc-9e91-5f975e5ef140-lun-2 create (on all compute nodes)
+		12.6.2. `sbd -d /dev/disk/by-path/ip-192.168.124.10\:3260-iscsi-iqn.2016-06.demo.cloud\:ec6910f2-e32d-4ebc-9e91-5f975e5ef140-lun-2 create` (on all compute nodes)
 
 13. Deploy barclamps
 
@@ -435,15 +442,15 @@
 
 	13.2. Deploy SUSE Manager Client Barclamp:
 
-		13.2.1. mkdir -p /opt/dell/chef/cookbooks/suse-manager-client/files/default
+		13.2.1. `mkdir -p /opt/dell/chef/cookbooks/suse-manager-client/files/default`
 
-		13.2.2. cd /opt/dell/chef/cookbooks/suse-manager-client/files/default
+		13.2.2. `cd /opt/dell/chef/cookbooks/suse-manager-client/files/default`
 
-		13.2.3. wget http://manager.demo.com/pub/rhn-org-trusted-ssl-cert-1.0-1.noarch.rpm
+		13.2.3. `wget http://manager.demo.com/pub/rhn-org-trusted-ssl-cert-1.0-1.noarch.rpm`
 
-		13.2.4. mv rhn-org-trusted-ssl-cert-1.0-1.noarch.rpm ssl-cert.rpm
+		13.2.4. `mv rhn-org-trusted-ssl-cert-1.0-1.noarch.rpm ssl-cert.rpm`
 
-		13.2.5. /opt/dell/bin/barclamp_install.rb --rpm core
+		13.2.5. `/opt/dell/bin/barclamp_install.rb --rpm core`
 
 		13.2.6. Create SUSE Manager proposal:
 			-Activation Key - <key_name>
@@ -468,7 +475,9 @@
 			-rabbitmq-server - pacemaker
 			-Storage Mode - Shared Storage
 			-Name of Block Device - /dev/disk/by-path/ip-192.168.124.10:3260-iscsi-iqn.2016-06.demo.cloud:ec6910f2-e32d-4ebc-9e91-5f975e5ef140-lun-1-part1
-			-Filesystem Type - xfs	13.5. Deploy Keystone Barclamp:
+			-Filesystem Type - xfs
+			
+	13.5. Deploy Keystone Barclamp:
 
 		13.5.1. Create Keystone proposal:
 			-Algorithm for Token Generation - UUID
@@ -494,8 +503,8 @@
 			-ceph-radosgw - Storage-2
 
 		13.6.2. Grant Calamari server admin access
-			-scp storage-2:/etc/ceph/ceph.client.admin.keyring .
-			-scp ./ceph.client.admin.keyring storage-1:/etc/ceph/.
+			-`scp storage-2:/etc/ceph/ceph.client.admin.keyring .`
+			-`scp ./ceph.client.admin.keyring storage-1:/etc/ceph/.`
 
 		13.6.3. Detect storage nodes in Calamari
 			-Navigate to 192.168.124.84
