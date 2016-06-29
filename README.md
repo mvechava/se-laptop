@@ -350,18 +350,18 @@
 
 	10.5. Attach iSCSI LUNs
 
-		10.5.1. Add iSCSI initiator names to Admin server iSCSI client configuration (`cat 
-		/etc/iscsi/initiatorname.iscsi`)
+		10.5.1. Add iSCSI initiator names to Admin server iSCSI client configuration (cat 
+		/etc/iscsi/initiatorname.iscsi)
 		
-		10.5.2. `yast2 iscsi-client` (on both controllers)
+		10.5.2. yast2 iscsi-client (on both controllers)
 		
 		10.5.3. Connect to iSCSI LUNs at 192.168.124.10 (on both controllers)
 
 	10.6. Enable SBD
 
-		10.6.1. `zypper in sbd` (on all controllers)
+		10.6.1. zypper in sbd (on all controllers)
 
-		10.6.2. `sbd -d /dev/disk/by-path/ip-192.168.124.10\:3260-iscsi-iqn.2016-06.demo.cloud\:ec6910f2-e32d-4ebc-9e91-5f975e5ef140-lun-2 create` (on all controllers)
+		10.6.2. sbd -d /dev/disk/by-path/ip-192.168.124.10\:3260-iscsi-iqn.2016-06.demo.cloud\:ec6910f2-e32d-4ebc-9e91-5f975e5ef140-lun-2 create (on all controllers)
 
 11. Create SUSE OpenStack Cloud 6 Storage VMs
 
@@ -416,17 +416,17 @@
 
 	12.5. Attach iSCSI LUNs
 	
-		12.5.1. Add iSCSI initiator names to Admin server iSCSI client configuration (`cat /etc/iscsi/initiatorname.iscsi`)
+		12.5.1. Add iSCSI initiator names to Admin server iSCSI client configuration (cat /etc/iscsi/initiatorname.iscsi)
 
-		12.5.2. `yast2 iscsi-client` (on both compute nodes)
+		12.5.2. yast2 iscsi-client (on both compute nodes)
 
 		12.5.3. Connect to iSCSI LUNs at 192.168.124.10 (on both compute nodes)
 
 	12.6. Enable SBD
 
-		12.6.1. `zypper in sbd` (on all compute nodes)
+		12.6.1. zypper in sbd (on all compute nodes)
 
-		12.6.2. `sbd -d /dev/disk/by-path/ip-192.168.124.10\:3260-iscsi-iqn.2016-06.demo.cloud\:ec6910f2-e32d-4ebc-9e91-5f975e5ef140-lun-2 create` (on all compute nodes)
+		12.6.2. sbd -d /dev/disk/by-path/ip-192.168.124.10\:3260-iscsi-iqn.2016-06.demo.cloud\:ec6910f2-e32d-4ebc-9e91-5f975e5ef140-lun-2 create (on all compute nodes)
 
 13. Deploy barclamps
 
@@ -449,15 +449,15 @@
 
 	13.2. Deploy SUSE Manager Client Barclamp:
 
-		13.2.1. `mkdir -p /opt/dell/chef/cookbooks/suse-manager-client/files/default`
+		13.2.1. mkdir -p /opt/dell/chef/cookbooks/suse-manager-client/files/default
 
-		13.2.2. `cd /opt/dell/chef/cookbooks/suse-manager-client/files/default`
+		13.2.2. cd /opt/dell/chef/cookbooks/suse-manager-client/files/default
 
-		13.2.3. `wget http://manager.demo.com/pub/rhn-org-trusted-ssl-cert-1.0-1.noarch.rpm`
+		13.2.3. wget http://manager.demo.com/pub/rhn-org-trusted-ssl-cert-1.0-1.noarch.rpm
 
-		13.2.4. `mv rhn-org-trusted-ssl-cert-1.0-1.noarch.rpm ssl-cert.rpm`
+		13.2.4. mv rhn-org-trusted-ssl-cert-1.0-1.noarch.rpm ssl-cert.rpm
 
-		13.2.5. `/opt/dell/bin/barclamp_install.rb --rpm core`
+		13.2.5. /opt/dell/bin/barclamp_install.rb --rpm core
 
 		13.2.6. Create SUSE Manager proposal:
 			-Activation Key - <key_name>
@@ -510,8 +510,8 @@
 			-ceph-radosgw - Storage-2
 
 		13.6.2. Grant Calamari server admin access
-			-`scp storage-2:/etc/ceph/ceph.client.admin.keyring .`
-			-`scp ./ceph.client.admin.keyring storage-1:/etc/ceph/.`
+			-scp storage-2:/etc/ceph/ceph.client.admin.keyring .
+			-scp ./ceph.client.admin.keyring storage-1:/etc/ceph/.
 
 		13.6.3. Detect storage nodes in Calamari
 			-Navigate to 192.168.124.84
