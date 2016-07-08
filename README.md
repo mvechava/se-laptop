@@ -261,9 +261,9 @@
 
 	9.4. Configure NTP for us.pool.ntp.org to start at boot (hardware clock not running UTC)
 
-	9.5. `/usr/lib/suseRegister/bin/clientSetup4SMT.sh https://thinkpad-w540.demo.com/center/regsvc`
+	9.5. In YaST -> Product Registration, register system against https://thinkpad-w540.demo.com/center/regsvc`
 
-	9.6. `zypper up`
+	9.6. `zypper in -t pattern cloud_admin && zypper up`
 
 	9.7. `yast2 crowbar`
 
@@ -288,7 +288,7 @@
 
 		9.8.2. mount /dev/sr0 /mnt
 
-		9.8.3. rsync -avP /mnt/ /srv/tftpboot/suse-12.1/install/
+		9.8.3. rsync -avP /mnt/ /srv/tftpboot/suse-12.1/x86_64/install/
 		
 		9.8.4. umount /mnt
 		
@@ -322,7 +322,7 @@
 		9.14.3. yast2 iscsi-lio-server
 			-Service Start - When Booting
 			-No Authentication
-			-IP Address - 192.168.124.1
+			-IP Address - 192.168.124.10
 			-LUN 0 - pgsql, /dev/disk/by-path/pci-0000:00:10.0-scsi-0:0:1:0
 			-LUN 1 - rmq, /dev/disk/by-path/pci-0000:00:10.0-scsi-0:0:2:0
 			-LUN 2 - sbd, /dev/disk/by-path/pci-0000:00:10.0-scsi-0:0:3:0
