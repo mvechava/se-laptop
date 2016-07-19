@@ -199,7 +199,7 @@
 
 	8.1. Create VM with folllowing settings:
 
-		-4GB RAM
+		-2GB RAM
 		-1x dual core processor
 		-200GB VHD
 		-eth0 - vmnet1
@@ -236,7 +236,7 @@
 
 	9.1. Create VM with following settings:
 
-		-4GB RAM
+		-2GB RAM
 		-1x dual core processor
 		-100GB VHD (OS)
 		-2GB VHD (PostgreSQL)
@@ -331,7 +331,7 @@
 
 	10.1. Create VMs
 
-		-2GB RAM
+		-4GB RAM
 		-1x dual core processor
 		-20GB VHD
 		-eth0 - vmnet2
