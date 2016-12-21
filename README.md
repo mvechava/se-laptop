@@ -2,35 +2,31 @@
 
 ##Installation of SUSE Solutions on SE laptops
 
-1. Install openSUSE Leap 42.1 and SLES 12 SP1 on ThinkPad W540
+1. Install openSUSE Leap 42.2 and SLES 12 SP2 on ThinkPad W540
 
 	1.1. Partitioning Scheme:
 
 		256GB M.2 SSD
 
-		/dev/sdb1 - FAT16 /boot/efi/EFI for openSUSE (200MB)
+		/dev/sdb1 - FAT16 /boot/efi/EFI for SLES (200MB)
 
-		/dev/sdb2 - FAT16 /boot/efi/EFI for SLES 12 SP1 (200MB)
+		/dev/sdb2 - FAT16 /boot/efi/EFI for openSUSE (200MB)
 
-		/dev/sdb3 - btrfs / for openSUSE (50GB)
+		/dev/sdb3 - btrfs / for SLES (Rest / 2)
 
-		/dev/sdb4 - btrfs / for SLES 12 SP1 (50GB)
-
-		/dev/sdb5 - xfs   /home for openSUSE (Rest / 2)
-
-		/dev/sdb6 - xfs	  /home for SLES 12 SP1 (Rest / 2)
+		/dev/sdb4 - btrfs / for openSUSE (Rest / 2)
 
 		1TB SATA III SSD
 
 		/dev/sda1 - xfs	  /data for both OSes
 
-2. Register SLES 12 SP1 using YaST -> Product Registration
+2. Register SLES 12 SP2 using YaST -> Product Registration
 
-3. Install SLES 12 SP1 Workstation Extension & Container Module using YaST -> Add-On Products
+3. Install SLES 12 SP2 Workstation Extension & Container Module using YaST -> Add-On Products
 
 4. Install docker
 
-	4.1. `zypper in docker docker-compose sle2docker zypper-docker sles11sp3-docker-image sles11sp4-docker-image sles12-docker-image sles12sp1-docker-image`
+	4.1. `zypper in docker sle2docker zypper-docker sles11sp4-docker-image sles12sp2-docker-image`
 
 	4.2. `sudo systemctl enable docker.service`
 
