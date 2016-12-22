@@ -24,6 +24,13 @@
 
 3. Install SLES 12 SP2 Workstation Extension & Container Module using YaST -> Add-On Products
 
+4. Install Bumblebee
+	4.1. `zypper ar -f http://download.opensuse.org/repositories/X11:/Bumblebee/SLE_12_SP2_Backports/ "Bumblebee"`
+	4.2. `zypper in bbswitch`
+	4.3. `reboot`
+	4.4. `zypper in nvidia-bumblebee`
+	4.5. `reboot`
+
 4. Install docker
 
 	4.1. `zypper in docker sle2docker zypper-docker sles11sp4-docker-image sles12sp2-docker-image`
